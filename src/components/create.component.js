@@ -13,7 +13,7 @@ export default class Create extends Component {
                         <input type="text" className="form-control"/>
                     </div>
                     <div className="form-group">
-                        <label class="control-label required">Type</label> </br>
+                        <label class="control-label required">Type</label> <br>
                         <select class="selectpicker">
 						  <option>Content</option>
 						  <option>Performance</option>
