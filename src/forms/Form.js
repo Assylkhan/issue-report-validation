@@ -3,7 +3,8 @@ import { FormErrors } from './FormErrors';
 import './Form.css';
 
 class Form extends Component {
-  var isIE = /*@cc_on!@*/false;
+  var ua = window.navigator.userAgent;
+  var isIE = !!ua.match(/MSIE|Trident/)
 
   constructor (props) {
     super(props);
