@@ -56,13 +56,13 @@ class Form extends Component {
     let fieldValidationErrors = this.state.formErrors;
     let issueTitleValid = this.state.issueTitleValid;
     let issueTypeValid = this.state.issueTypeValid;
-    let issueFrequency= this.state.issueFrequency,
-    let issuePriorityValid = this.state.issuePriorityValid,
-    let actionPerformedValid = this.state.actionPerformedValid,
-    let expectedResultValid = this.state.expectedResultValid,
-    let actualResultValid = this.state.actualResultValid,
-    let errorMessageValid = this.state.errorMessageValid,
-    let additionalInfoValid = this.state.additionalInfoValid,
+    let issueFrequency= this.state.issueFrequency;
+    let issuePriorityValid = this.state.issuePriorityValid;
+    let actionPerformedValid = this.state.actionPerformedValid;
+    let expectedResultValid = this.state.expectedResultValid;
+    let actualResultValid = this.state.actualResultValid;
+    let errorMessageValid = this.state.errorMessageValid;
+    let additionalInfoValid = this.state.additionalInfoValid;
 
     switch(fieldName) {
       case 'issueTitle':
