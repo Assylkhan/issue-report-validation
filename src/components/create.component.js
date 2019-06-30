@@ -21,8 +21,6 @@ export default class Create extends Component {
 						  <option>Functional</option>
 						  <option>Crash</option>
 						</select>
-
-                        <!-- // <input type="text" className="form-control"/> -->
                     </div>
                     <div className="form-group">
                         <label>Frequency *</label>
@@ -33,7 +31,6 @@ export default class Create extends Component {
                     </div>
 
                     <div className="form-group">
-                        <!-- // <input type="submit" value="Register Business" className="btn btn-primary"/> -->
                         <legend>FREQUENCY *</legend>
                         <div class="btn-group" data-toggle="buttons">
 			                <label class="btn btn-default">
@@ -52,7 +49,6 @@ export default class Create extends Component {
                     </div>
 
                     <div className="form-group">
-                        <!-- // <input type="submit" value="Register Business" className="btn btn-primary"/> -->
                         <legend>PRIORITY *</legend>
                         <div class="btn-group" data-toggle="buttons">
 			                <label class="btn btn-default">
