@@ -49,7 +49,7 @@ class Form extends Component {
   superFNbecauseMSMakesIEsuckIntentionally = (e) => {
     var isIE = /*@cc_on!@*/false;
     if(isIE) // For Chrome, oninput works as expected
-    handleUserInput(e);
+    this.handleUserInput(e);
   }
 
   validateField(fieldName, value) {
