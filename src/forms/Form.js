@@ -129,7 +129,7 @@ class Form extends Component {
         <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
           <label class="control-label required" class="control-label required">Issue Title</label>
           <input type="text" className="form-control" name="issueTitle"
-            value={this.state.issueType}
+            value={this.state.issueTitle}
             onChange={this.handleUserInput}/>
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
