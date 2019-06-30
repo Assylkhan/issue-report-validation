@@ -9,11 +9,11 @@ export default class Create extends Component {
                 <h3>Issue report validation</h3>
                 <form>
                     <div className="form-group">
-                        <label>Issue Title *</label>
+                        <label class="control-label required" class="control-label required">Issue Title</label>
                         <input type="text" className="form-control"/>
                     </div>
                     <div className="form-group">
-                        <label>Type *</label>
+                        <label class="control-label required">Type</label> </br>
                         <select class="selectpicker">
 						  <option>Content</option>
 						  <option>Performance</option>
@@ -23,7 +23,7 @@ export default class Create extends Component {
 						</select>
                     </div>
                     <div className="form-group">
-                        <label>Frequency *</label>
+                        <label class="control-label required">Frequency</label>
                         <input type="text" className="form-control"/>
                     </div>
                     <div className="form-group">
@@ -31,7 +31,7 @@ export default class Create extends Component {
                     </div>
 
                     <div className="form-group">
-                        <legend>FREQUENCY *</legend>
+                        <label class="control-label required">FREQUENCY</label>
                         <div class="btn-group" data-toggle="buttons">
 			                <label class="btn btn-default">
 			                    <input type="radio" id="Fr1" name="frequency[1]" value="1" /> Every Time
@@ -49,7 +49,7 @@ export default class Create extends Component {
                     </div>
 
                     <div className="form-group">
-                        <legend>PRIORITY *</legend>
+                        <label class="control-label required">PRIORITY</label>
                         <div class="btn-group" data-toggle="buttons">
 			                <label class="btn btn-default">
 			                    <input type="radio" id="Pr1" name="priority[1]" value="1" /> Low
@@ -67,28 +67,28 @@ export default class Create extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Action Performed *</label>
-                        <textarea class="form-control rounded-0" id="ActionPerformed" rows="10"></textarea>
+                        <label class="control-label required">Action Performed </label>
+                        <textarea class="form-control rounded-0" id="ActionPerformed" rows="4"></textarea>
                     </div>
 					<div className="form-group">
-                        <label>Expected Result *</label>
-                        <textarea class="form-control rounded-0" id="ExpectedResult" rows="10"></textarea>
+                        <label class="control-label required">Expected Result</label>
+                        <textarea class="form-control rounded-0" id="ExpectedResult" rows="4"></textarea>
                     </div>
 					<div className="form-group">
-                        <label>Actual Result *</label>
-                        <textarea class="form-control rounded-0" id="ActualResult" rows="10"></textarea>
+                        <label class="control-label required">Actual Result </label>
+                        <textarea class="form-control rounded-0" id="ActualResult" rows="4"></textarea>
                     </div>
 					<div className="form-group">
-                        <label>Error Message *</label>
-                        <textarea class="form-control rounded-0" id="ErrorMessage" rows="10"></textarea>
+                        <label class="control-label required">Error Message </label>
+                        <textarea class="form-control rounded-0" id="ErrorMessage" rows="4"></textarea>
                     </div>
 					<div className="form-group">
-                        <label>Additional Environment Info *</label>
-                        <textarea class="form-control rounded-0" id="AdditionalInfo" rows="10"></textarea>
+                        <label class="control-label required">Additional Environment Info </label>
+                        <textarea class="form-control rounded-0" id="AdditionalInfo" rows="4"></textarea>
                     </div>
 
                     <div className="form-group">
-                    	<button type="button" class="btn btn-dark">Submit</button>
+                    	<button type="button" class="btn btn-warning">Submit</button>
                     </div>
                 </form>
             </div>
