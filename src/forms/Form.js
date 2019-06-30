@@ -26,7 +26,7 @@ class Form extends Component {
   // Radio Button Validation
   // copyright Stephen Chapman, 15th Nov 2004,14th Sep 2005
   // you may copy this function but please keep the copyright notice with it
-  function valButton(btn) {
+  valButton(btn) {
      var cnt = -1;
      for (var i=btn.length-1; i > -1; i--) {
          if (btn[i].checked) {cnt = i; i = -1;}
