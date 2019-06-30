@@ -1,7 +1,7 @@
 // create.component.js
 
 import React, { Component } from 'react';
-import Form from './forms/Form.js'
+import Form from '../forms/Form.js'
 
 export default class Create extends Component {
     render() {
