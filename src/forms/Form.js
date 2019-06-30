@@ -3,8 +3,6 @@ import { FormErrors } from './FormErrors';
 import './Form.css';
 
 class Form extends Component {
-  var ua = window.navigator.userAgent;
-  var isIE = !!ua.match(/MSIE|Trident/)
 
   constructor (props) {
     super(props);
@@ -42,8 +40,9 @@ class Form extends Component {
   // else alert('Button value ' + btn + ' selected');
 
   superFNbecauseMSMakesIEsuckIntentionally = (e) => {
-        if(isIE) // For Chrome, oninput works as expected
-            handleUserInput(e);
+    var isIE = /*@cc_on!@*/false;
+    if(isIE) // For Chrome, oninput works as expected
+    handleUserInput(e);
     }
 
   handleUserInput = (e) => {
