@@ -27,10 +27,6 @@ export default class Create extends Component {
                         <input type="text" className="form-control"/>
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Register Business" className="btn btn-primary"/>
-                    </div>
-
-                    <div className="form-group">
                         <label class="control-label required">FREQUENCY</label>
                         <div class="btn-group" data-toggle="buttons">
 			                <label class="btn btn-default">
@@ -88,7 +84,7 @@ export default class Create extends Component {
                     </div>
 
                     <div className="form-group">
-                    	<button type="button" class="btn btn-warning">Submit</button>
+                    	<button type="button" class="btn btn-success">Submit</button>
                     </div>
                 </form>
             </div>
