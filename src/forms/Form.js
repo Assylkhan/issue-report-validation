@@ -39,17 +39,17 @@ class Form extends Component {
   // if (btn == null) alert('No radio button selected');
   // else alert('Button value ' + btn + ' selected');
 
-  superFNbecauseMSMakesIEsuckIntentionally = (e) => {
-    var isIE = /*@cc_on!@*/false;
-    if(isIE) // For Chrome, oninput works as expected
-    handleUserInput(e);
-    }
-
   handleUserInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({[name]: value},
                   () => { this.validateField(name, value) });
+  }
+
+  superFNbecauseMSMakesIEsuckIntentionally = (e) => {
+    var isIE = /*@cc_on!@*/false;
+    if(isIE) // For Chrome, oninput works as expected
+    handleUserInput(e);
   }
 
   validateField(fieldName, value) {
