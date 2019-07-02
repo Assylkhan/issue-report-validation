@@ -6,7 +6,7 @@ import Form from '../forms/Form.js'
 export default class Create extends Component {
     render() {
         return (
-            <div style={{marginTop: 10}}>
+            <div>
                 <h3 align="center">Issue report validation</h3>
                 <Form />
             </div>

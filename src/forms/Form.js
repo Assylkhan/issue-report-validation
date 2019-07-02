@@ -122,7 +122,7 @@ class Form extends Component {
           case 'Introduction to Testing':
             cycleType = 'Intro';
             break;
-          case 'Computers & Mobile & Challenge':
+          case 'Computers & Mobile & Challeng':
             cycleType = 'Comp';
             break;
           case 'Charles':
@@ -297,7 +297,7 @@ class Form extends Component {
                   value={this.state.cycleType}
                   onChange={this.handleUserInput}>
             <option>Introduction to Testing</option>
-            <option>Computers & Mobile & Charles</option>
+            <option>Computers & Mobile & Challenge</option>
             <option>Charles</option>
           </select>
         </div>
@@ -308,7 +308,7 @@ class Form extends Component {
             <label class="control-label required">Image</label><br/>
             <label class="alert alert-warning">Image only in .jpg or .png format: 
               <a class="alert-link" href="https://www.utest.com/courses/creating-screenshots/creating-quality-screenshots"> more info</a>
-            </label><input class="form-control" type="file" accept="image/*" /><br/>
+            </label><input class="form-control" type="file" accept=".jpg, .png" /><br/>
           </div>
           <div style={{display: this.state.cycleType == 'Intro' ? 'none' : 'block' }} id="videoFile">
             <label class="control-label">Video</label><br/>
@@ -317,7 +317,7 @@ class Form extends Component {
                 <li><a class="alert-link" href="https://www.utest.com/courses/creating-screen-recordings">capturing a screen recording</a></li>
                 <li><a class="alert-link" href="https://www.utest.com/articles/using-handbrake-in-a-few-easy-steps">compressing a video to reduce size</a></li>
               </ul>
-            </label><input class="form-control" type="file" accept="video/*" /><br/>
+            </label><input class="form-control" type="file" accept=".mp4" /><br/>
           </div>
           <div style={{display: this.state.cycleType == 'Intro' ? 'none' : 'block' }} id="logFile">
             <label class="control-label">Log</label><br/>
@@ -327,7 +327,9 @@ class Form extends Component {
                 <li style={{display: this.state.cycleType == 'Charles' ? 'none' : 'list-item' }}><a class="alert-link" href="https://www.utest.com/courses/device-logs">capturing device logs</a></li>
                 <li style={{display: this.state.cycleType == 'Charles' ? 'list-item' : 'none' }}><a class="alert-link" href="https://www.utest.com/courses/charles-proxy">charles Proxy Logs</a></li>
               </ul>
-            </label><input class="form-control" type="file" accept="text/plain" /><br/>
+            </label>
+            {this.state.cycleType == 'Charles' ? <input class="form-control" type="file" accept=".chls"/> : <input class="form-control" type="file" accept="text/plain"/>}
+            <br/>
           </div>
         </div>
         <br/>

@@ -9,9 +9,15 @@
 	background-color: #F8B3B3;
 	display: block;
 }
-.demoForm >  .alert {
+.alert {
+	font-size: 13px;
+}
+.demoForm .alert {
 	padding: 2px 10px;
 	margin-bottom: 7px;
+}
+.alert ul {
+	margin-bottom: 0px;
 }
 .alert-danger {
 	display: none;
@@ -19,8 +25,5 @@
 .form-control {
 	font-size: 12px;
 	border-radius: 0px;
-}
-.alert {
-	font-size: 13px;
 }
 .hidden { display:none; }

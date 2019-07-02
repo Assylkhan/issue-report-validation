@@ -31,7 +31,7 @@ class App extends Component {
         <div className="container">
           <nav className="alert alert-success" align="center">
           <h4 className="alert-link" align="center">Utest Academy</h4>
-          </nav> <br/>
+          </nav>
           <Switch>
             <Route exact path='/' component={ Create } />
               // <Route exact path='/create' component={ Create } />
