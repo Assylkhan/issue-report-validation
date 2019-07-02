@@ -9,7 +9,17 @@ class Form extends Component {
     this.state = {
       issueTitle: '',
       issueType: '',
-      formErrors: {issueTitle: '', issueType: ''},
+      issueFrequency: '',
+      issuePriority: '',
+      actionPerformed: '',
+      expectedResult: '',
+      actualResult: '',
+      errorMessage: '',
+      additionalInfo: '',
+      formErrors: {issueTitle: '', issueType: '', issueFrequency: '',
+                  issuePriority: '', actionPerformed: '',
+                  expectedResult: '', actualResult: '',
+                  errorMessage: '', additionalInfo: ''},
       issueTitleValid: false,
       issueTypeValid: false,
       issueFrequencyValid: false,
@@ -56,7 +66,7 @@ class Form extends Component {
     let fieldValidationErrors = this.state.formErrors;
     let issueTitleValid = this.state.issueTitleValid;
     let issueTypeValid = this.state.issueTypeValid;
-    let issueFrequency= this.state.issueFrequency;
+    let issueFrequencyValid= this.state.issueFrequencyValid;
     let issuePriorityValid = this.state.issuePriorityValid;
     let actionPerformedValid = this.state.actionPerformedValid;
     let expectedResultValid = this.state.expectedResultValid;
@@ -66,32 +76,36 @@ class Form extends Component {
 
     switch(fieldName) {
       case 'issueTitle':
-        issueTitleValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.issueTitle = issueTitleValid ? '' : ' is invalid';
+        issueTitleValid = value.match(/^[\S]+[\S\s]+-[\s]*[\S]+[\S\s]+-[\s]*[\S]+[\S\s]+$/i);
+        fieldValidationErrors.issueTitle = issueTitleValid ? '' : ' the title has to follow the required format';
         break;
       case 'issueType':
-        issueTypeValid = value.length >= 3;
-        fieldValidationErrors.issueType = issueTypeValid ? '': ' is too short';
+        // issueTypeValid = value.length >= 3;
+        // fieldValidationErrors.issueType = issueTypeValid ? '': ' is too short';
         break;
       case 'issueFrequency':
         // issueTypeValid = value.length >= 6;
-        fieldValidationErrors.issueType = ''+value;
+        fieldValidationErrors.issueFrequency = value;
         break;
       case 'issuePriority':
         // issueTypeValid = value.length >= 6;
-        fieldValidationErrors.issueType = ''+value;
+        fieldValidationErrors.issuePriority = value;
         break;
       case 'actionPerformed':
-        /*issueTypeValid = value.length >= 6;
-        fieldValidationErrors.issueType = issueTypeValid ? '': ' is too short';*/
+        actionPerformedValid = value.match(/^(\d+\s?(\.|\)|-)+\s?\S*(https:\/\/).*(\n*\d+\s?(\.|\)|-)+\s?((?!observe)\S+.)+){0,20})+$/g);
+        // var containsObserve = value.match(/^.*(\n*.*)*(observe)+(\n*.*)*$/g);
+        var containsObserve = value.indexOf('observe') !== -1 ? ' remove observe' : '';
+        fieldValidationErrors.actionPerformed = actionPerformedValid ? '' : ' invalid'; 
+        fieldValidationErrors.actionPerformed = fieldValidationErrors.actionPerformed + containsObserve;
         break;
       case 'expectedResult':
-        /*issueTypeValid = value.length >= 6;
-        fieldValidationErrors.issueType = issueTypeValid ? '': ' is too short';*/
+        expectedResultValid = value.match(/^(\d+\s?(\.|\)|-)*.*)+$/gm);
+        // expectedResultValid = value.length >= 6;
+        fieldValidationErrors.expectedResult = expectedResultValid ? 'make sure it doesn\'t contain reproduction steps': '';
         break;
       case 'actualResult':
-        actualResultValid = value.length >= 3;
-        fieldValidationErrors.issueType = actualResultValid ? '': ' is too short';
+        actualResultValid = value.length >= 5;
+        fieldValidationErrors.actualResultValid = actualResultValid ? '': ' is too short';
         break;
       case 'errorMessage':
         /*issueTypeValid = value.length >= 6;
@@ -107,16 +121,30 @@ class Form extends Component {
     this.setState({formErrors: fieldValidationErrors,
                     issueTitleValid: issueTitleValid,
                     issueTypeValid: issueTypeValid,
+                    issueFrequencyValid: issueFrequencyValid,
+                    issuePriorityValid: issuePriorityValid,
+                    actionPerformedValid: actionPerformedValid,
+                    expectedResultValid: expectedResultValid,
                     actualResultValid: actualResultValid,
+                    errorMessageValid: errorMessageValid,
+                    additionalInfoValid: additionalInfoValid
                   }, this.validateForm);
   }
 
   validateForm() {
-    this.setState({formValid: this.state.issueTitleValid && this.state.issueTypeValid});
+    this.setState({formValid: this.state.issueTitleValid && this.state.issueTypeValid
+                  && this.state.issueFrequencyValid && this.state.issuePriorityValid 
+                  && this.state.actionPerformedValid && this.state.expectedResultValid
+                  && this.state.actualResultValid && this.state.errorMessageValid 
+                  && this.state.additionalInfoValid});
   }
 
   errorClass(error) {
     return(error.length === 0 ? '' : 'has-error');
+  }
+
+  displayType(error) {
+   return(error.length === 0 ? 'display: none' : 'display: block'); 
   }
 
   render () {
@@ -128,12 +156,14 @@ class Form extends Component {
 
         <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
           <label class="control-label required" class="control-label required">Issue Title</label>
-          <input type="text" className="form-control" name="issueTitle"
+          <p class="alert alert-danger" style={{display: this.state.formErrors.issueTitle.length > 0 ? 'block' : 'none' }}>{this.state.formErrors.issueTitle}</p>
+          <input placeholder="Samsung A7/ Windows 10 - Area of the app - Description of the issue" type="text" className="form-control" name="issueTitle"
             value={this.state.issueTitle}
             onChange={this.handleUserInput}/>
         </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.issueType)}`}>
           <label class="control-label required">Type</label><br/>
+          <p class="alert alert-warning">See the guide about bug types <a class="alert-link" href="https://www.utest.com/courses/bugs/what-is-a-bug">here</a></p>
           <select class="selectpicker" name="issueType"
                   value={this.state.issueType}
                   onChange={this.handleUserInput}>
@@ -144,64 +174,124 @@ class Form extends Component {
             <option>Crash</option>
           </select>
         </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
-          <label class="control-label required">FREQUENCY</label>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.issueFrequency)}`}>
+          <label class="control-label required">FREQUENCY</label><br/>
           <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default">
-                <input type="radio" id="Fr1" name="issueFrequency" value="1" /> Every Time
+            <label class="">
+                <input type="radio" id="Fr1" name="issueFrequency" value="1"
+                  value={this.state.issueFrequency}
+                  onChange={this.handleUserInput} /> Every Time
             </label> 
-            <label class="btn btn-default">
-                <input type="radio" id="Fr2" name="issueFrequency" value="2" /> Hardly Ever
+            <label class="">
+                <input type="radio" id="Fr2" name="issueFrequency" value="2"
+                  value={this.state.issueFrequency}
+                  onChange={this.handleUserInput} /> Hardly Ever
             </label> 
-            <label class="btn btn-default">
-                <input type="radio" id="Fr3" name="issueFrequency" value="3" /> Occasionally
+            <label class="">
+                <input type="radio" id="Fr3" name="issueFrequency" value="3" 
+                  value={this.state.issueFrequency}
+                  onChange={this.handleUserInput} /> Occasionally
             </label> 
-            <label class="btn btn-default">
-                <input type="radio" id="Fr4" name="issueFrequency" value="4" /> Once
-            </label> 
+            <label class="">
+                <input type="radio" id="Fr4" name="issueFrequency" value="4" 
+                  value={this.state.issueFrequency}
+                  onChange={this.handleUserInput} /> Once
+            </label>
           </div>
         </div>
 
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
-          <label class="control-label required">PRIORITY</label>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.issuePriority)}`}>
+          <label class="control-label required">PRIORITY</label><br/>
+          <p class="alert alert-warning">Choose the priority fairly to help check your issue quicker, it does not affect the issues final value</p>
           <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default">
-                <input type="radio" id="Pr1" name="issuePriority" value="1" /> Low
+            <label class="">
+                <input type="radio" id="Pr1" name="issuePriority" value="1"
+                  value={this.state.issuePriority}
+                  onChange={this.handleUserInput} /> Low
             </label> 
-            <label class="btn btn-default">
-                <input type="radio" id="Pr2" name="issuePriority" value="2" /> Medium
+            <label class="">
+                <input type="radio" id="Pr2" name="issuePriority" value="2"
+                  value={this.state.issuePriority}
+                  onChange={this.handleUserInput} /> Medium
             </label> 
-            <label class="btn btn-default">
-                <input type="radio" id="Pr3" name="issuePriority" value="3" /> High
+            <label class="">
+                <input type="radio" id="Pr3" name="issuePriority" value="3"
+                  value={this.state.issuePriority}
+                  onChange={this.handleUserInput} /> High
             </label> 
-            <label class="btn btn-default">
-                <input type="radio" id="Pr4" name="issuePriority" value="4" /> Critical
-            </label> 
+            <label class="">
+                <input type="radio" id="Pr4" name="issuePriority" value="4"
+                  value={this.state.issuePriority}
+                  onChange={this.handleUserInput} /> Critical
+            </label>
           </div>
         </div>
 
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.actionPerformed)}`}>
             <label class="control-label required">Action Performed </label>
-            <textarea class="form-control rounded-0" id="ActionPerformed" rows="4" name="actionPerformed"></textarea>
+            <p class="alert alert-danger" style={{display: this.state.formErrors.actionPerformed.length > 0 ? 'block' : 'none' }}>Make sure it follows the requirements <a class="alert-link" href="https://www.utest.com/courses/bug-reports/information-fields"> here</a></p>
+            <textarea placeholder="1. Make sure to include https:// url in the first step                                                             2. etc." 
+            class="form-control rounded-0" id="ActionPerformedId" rows="4" name="actionPerformed"
+              value={this.state.actionPerformed}
+              onChange={this.handleUserInput}
+              onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
         </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.expectedResult)}`}>
             <label class="control-label required">Expected Result</label>
-            <textarea class="form-control rounded-0" id="ExpectedResult" rows="4" name="expectedResult"></textarea>
+            <p class="alert alert-danger" style={{display: this.state.formErrors.expectedResult.length > 0 ? 'block' : 'none' }}>{this.state.formErrors.expectedResult}</p>
+            <p class="alert alert-warning">Describe exactly what the user would expect to happen when carrying out the steps in the actions performed.</p>
+            <textarea class="form-control rounded-0" id="ExpectedResultId" rows="4" name="expectedResult"
+              value={this.state.expectedResult}
+              onChange={this.handleUserInput}
+              onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
         </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.actualResult)}`}>
             <label class="control-label required">Actual Result </label>
-            <textarea class="form-control rounded-0" id="ActualResult" rows="4" name="actualResult"></textarea>
+            <p class="alert alert-warning">Describe exactly what does happen when the user carries out the steps in the actions performed.</p>
+            <textarea class="form-control rounded-0" id="ActualResultId" rows="4" name="actualResult"
+              value={this.state.actualResult}
+              onChange={this.handleUserInput}
+              onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
         </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
-            <label class="control-label required">Error Message </label>
-            <textarea class="form-control rounded-0" id="ErrorMessage" rows="4" name="errorMessage"></textarea>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.errorMessage)}`}>
+            <label class="control-label">Error Message </label>
+            <p class="alert alert-warning">Leave it empty if there is nothing to add</p>
+            <textarea class="form-control rounded-0" id="ErrorMessageId" rows="4" name="errorMessage"
+              value={this.state.errorMessage}
+              onChange={this.handleUserInput}
+              onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
         </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.issueTitle)}`}>
-            <label class="control-label required">Additional Environment Info </label>
-            <textarea class="form-control rounded-0" id="AdditionalInfo" rows="4" name="additionalInfo"></textarea>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.additionalInfo)}`}>
+            <label class="control-label">Additional Environment Info </label>
+            <p class="alert alert-warning">Leave it empty if there is nothing to add</p>
+            <textarea class="form-control rounded-0" id="AdditionalInfoId" rows="4" name="additionalInfo"
+              value={this.state.additionalInfo}
+              onChange={this.handleUserInput}
+              onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
         </div>
 
-        <div className="form-group">
+        <div>
+          <label class="control-label required">Image</label><br/>
+          <label class="alert alert-warning">Image only in .jpg or .png format: 
+            <a class="alert-link" href="https://www.utest.com/courses/creating-screenshots/creating-quality-screenshots"> more info</a>
+          </label><input class="form-control" type="file" accept="image/*" /><br/>
+          <label class="control-label">Log</label><br/>
+          <label class="alert alert-warning">Log file only in .txt format: 
+            <ul>
+              <li><a class="alert-link" href="https://www.utest.com/courses/console-logs">capturing browser console logs</a></li>
+              <li><a class="alert-link" href="https://www.utest.com/courses/device-logs">capturing device logs</a></li>
+            </ul>
+          </label><input class="form-control" type="file" accept="text/plain" /><br/>
+          <label class="control-label">Video</label><br/>
+          <label class="alert alert-warning">Video file only in .mp4 format:  
+            <ul>
+              <li><a class="alert-link" href="https://www.utest.com/courses/creating-screen-recordings">capturing a screen recording</a></li>
+              <li><a class="alert-link" href="https://www.utest.com/articles/using-handbrake-in-a-few-easy-steps">compressing a video to reduce size</a></li>
+            </ul>
+          </label><input class="form-control" type="file" accept="video/*" /><br/>
+        </div>
+        <br/>
+        <div className="form-group hidden">
           <button type="button" class="btn btn-success" disabled={!this.state.formValid}>Submit</button>
         </div>
 

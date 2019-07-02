@@ -2,3 +2,25 @@
 	width: 500px;
 	margin: auto;
 }
+.btn-group > label {
+	margin-right: 15px;
+}
+.errorLine {
+	background-color: #F8B3B3;
+	display: block;
+}
+.demoForm >  .alert {
+	padding: 2px 10px;
+	margin-bottom: 7px;
+}
+.alert-danger {
+	display: none;
+}
+.form-control {
+	font-size: 12px;
+	border-radius: 0px;
+}
+.alert {
+	font-size: 13px;
+}
+.hidden { display:none; }

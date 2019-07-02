@@ -15,3 +15,19 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 app.listen(port);
+
+
+
+// var express = require('express'),
+//   app = express(),
+//   port = process.env.PORT || 3000;
+
+// app.use(express.json());
+// app.use(express.urlencoded( { extended: false }));
+
+// var routes = require('./api/routes/udeliverRoutes'); //importing route
+// routes(app); //register the route
+
+// app.listen(port);
+
+// console.log('todo list RESTful API server started on: ' + port);
