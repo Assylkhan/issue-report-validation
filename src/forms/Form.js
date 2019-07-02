@@ -79,7 +79,7 @@ class Form extends Component {
     switch(fieldName) {
       case 'issueTitle':
         issueTitleValid = value.match(/^[\S]+[\S\s]+-[\s]*[\S]+[\S\s]+-[\s]*[\S]+[\S\s]+$/i);
-        fieldValidationErrors.issueTitle = issueTitleValid ? '' : ' the title has to follow the required format';
+        fieldValidationErrors.issueTitle = issueTitleValid ? '' : ' Title has to follow the required format';
         break;
       case 'issueType':
         // issueTypeValid = value.length >= 3;
