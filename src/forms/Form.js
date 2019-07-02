@@ -29,7 +29,8 @@ class Form extends Component {
       actualResultValid: false,
       errorMessageValid: false,
       additionalInfoValid: false,
-      formValid: false
+      formValid: false,
+      cycleType: 'Intro'
     }
   }
 
@@ -73,6 +74,7 @@ class Form extends Component {
     let actualResultValid = this.state.actualResultValid;
     let errorMessageValid = this.state.errorMessageValid;
     let additionalInfoValid = this.state.additionalInfoValid;
+    var cycleType = this.state.cycleType;
 
     switch(fieldName) {
       case 'issueTitle':
@@ -115,6 +117,19 @@ class Form extends Component {
         /*issueTypeValid = value.length >= 6;
         fieldValidationErrors.issueType = issueTypeValid ? '': ' is too short';*/
         break;
+      case 'cycleType':
+        switch(value) {
+          case 'Introduction to Testing':
+            cycleType = 'Intro';
+            break;
+          case 'Computers & Mobile & Challenge':
+            cycleType = 'Comp';
+            break;
+          case 'Charles':
+            cycleType = "Charles";
+            break;
+          default: break;
+        }
       default:
         break;
     }
@@ -127,7 +142,9 @@ class Form extends Component {
                     expectedResultValid: expectedResultValid,
                     actualResultValid: actualResultValid,
                     errorMessageValid: errorMessageValid,
-                    additionalInfoValid: additionalInfoValid
+                    additionalInfoValid: additionalInfoValid,
+                    formValid: this.state.formValid,
+                    cycleType: cycleType
                   }, this.validateForm);
   }
 
@@ -150,7 +167,7 @@ class Form extends Component {
   render () {
     return (
       <form className="demoForm">
-        <div className="panel panel-default">
+        <div className="panel panel-default hidden">
           <FormErrors formErrors={this.state.formErrors} />
         </div>
 
@@ -269,26 +286,49 @@ class Form extends Component {
               onChange={this.handleUserInput}
               onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
         </div>
+        <br/>
+        <hr/>
+        <br/>
+        <h5>Attachments</h5>
+        <br/>
+        <div className="form-group">
+          <label class="control-label">Select Academy cycle</label><br/>
+          <select class="selectpicker" name="cycleType"
+                  value={this.state.cycleType}
+                  onChange={this.handleUserInput}>
+            <option>Introduction to Testing</option>
+            <option>Computers & Mobile & Charles</option>
+            <option>Charles</option>
+          </select>
+        </div>
 
+        
         <div>
-          <label class="control-label required">Image</label><br/>
-          <label class="alert alert-warning">Image only in .jpg or .png format: 
-            <a class="alert-link" href="https://www.utest.com/courses/creating-screenshots/creating-quality-screenshots"> more info</a>
-          </label><input class="form-control" type="file" accept="image/*" /><br/>
-          <label class="control-label">Log</label><br/>
-          <label class="alert alert-warning">Log file only in .txt format: 
-            <ul>
-              <li><a class="alert-link" href="https://www.utest.com/courses/console-logs">capturing browser console logs</a></li>
-              <li><a class="alert-link" href="https://www.utest.com/courses/device-logs">capturing device logs</a></li>
-            </ul>
-          </label><input class="form-control" type="file" accept="text/plain" /><br/>
-          <label class="control-label">Video</label><br/>
-          <label class="alert alert-warning">Video file only in .mp4 format:  
-            <ul>
-              <li><a class="alert-link" href="https://www.utest.com/courses/creating-screen-recordings">capturing a screen recording</a></li>
-              <li><a class="alert-link" href="https://www.utest.com/articles/using-handbrake-in-a-few-easy-steps">compressing a video to reduce size</a></li>
-            </ul>
-          </label><input class="form-control" type="file" accept="video/*" /><br/>
+          <div id="imageFile">
+            <label class="control-label required">Image</label><br/>
+            <label class="alert alert-warning">Image only in .jpg or .png format: 
+              <a class="alert-link" href="https://www.utest.com/courses/creating-screenshots/creating-quality-screenshots"> more info</a>
+            </label><input class="form-control" type="file" accept="image/*" /><br/>
+          </div>
+          <div style={{display: this.state.cycleType == 'Intro' ? 'none' : 'block' }} id="videoFile">
+            <label class="control-label">Video</label><br/>
+            <label class="alert alert-warning">Video file only in .mp4 format (guide):  
+              <ul>
+                <li><a class="alert-link" href="https://www.utest.com/courses/creating-screen-recordings">capturing a screen recording</a></li>
+                <li><a class="alert-link" href="https://www.utest.com/articles/using-handbrake-in-a-few-easy-steps">compressing a video to reduce size</a></li>
+              </ul>
+            </label><input class="form-control" type="file" accept="video/*" /><br/>
+          </div>
+          <div style={{display: this.state.cycleType == 'Intro' ? 'none' : 'block' }} id="logFile">
+            <label class="control-label">Log</label><br/>
+            <label class="alert alert-warning">Log file only in .txt format (guide): 
+              <ul>
+                <li style={{display: this.state.cycleType == 'Charles' ? 'none' : 'list-item' }}><a class="alert-link" href="https://www.utest.com/courses/console-logs">capturing browser console logs</a></li>
+                <li style={{display: this.state.cycleType == 'Charles' ? 'none' : 'list-item' }}><a class="alert-link" href="https://www.utest.com/courses/device-logs">capturing device logs</a></li>
+                <li style={{display: this.state.cycleType == 'Charles' ? 'list-item' : 'none' }}><a class="alert-link" href="https://www.utest.com/courses/charles-proxy">charles Proxy Logs</a></li>
+              </ul>
+            </label><input class="form-control" type="file" accept="text/plain" /><br/>
+          </div>
         </div>
         <br/>
         <div className="form-group hidden">
