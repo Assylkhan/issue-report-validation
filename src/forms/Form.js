@@ -437,7 +437,6 @@ class Form extends Component {
         </div>
         <br/>
         <hr/>
-        <br/>
         <h5>Attachments</h5>
         <br/>
         <div className="form-group">

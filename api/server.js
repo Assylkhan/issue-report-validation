@@ -7,7 +7,6 @@ const bodyParser = require('body-parser'); // turns response into usable format
 const PORT = 4000;
 const cors = require('cors'); // allows/disallows cross-site communication
 const morgan = require('morgan'); // logs requests
-global.visitsAmount;
 
 // Controllers - aka, the db queries
 const main = require('./controllers/main');
