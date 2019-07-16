@@ -15,10 +15,11 @@ export default class Create extends Component {
 	}
 
 	getVisitsAmount(role){
-    fetch(`http://127.0.0.1:4000/api?role=${role}`)
+		let remoteURL = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? `http://127.0.0.1:4000/api?role=${role}` : 
+		`https://issue-report-validation.herokuapp.com/api?role=${role}`
+    fetch(remoteURL)
       .then(response => response.json())
       .then(items => console.log(items))
-      // .then(items => this.setState({items}))
       .catch(err => console.log(err))
   }
 
