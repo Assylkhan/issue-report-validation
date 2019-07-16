@@ -8,13 +8,20 @@ export function loadFile(inputId, form) {
       alert("Error while reading file " + input.files[0].name + ": " + loadEvent.target.error);
       return;
     }
-    var isLogValid = loadEvent.target.result.match(/(\d{2}:\d{2}:\d{2}\.\d{3}\s{1}Navigated to )/ig);
+    var isLogValid = '';
+    if (form.state.browserName == 'Chrome' || 
+        form.state.browserName == 'Firefox' ||
+        form.state.browserName == 'Android Console Logs with Chrome' ||
+        form.state.browserName == 'Chrome') {
+      isLogValid = loadEvent.target.result.match(/(\d{2}:\d{2}:\d{2}\.\d{3}\s{1}Navigated to )/ig);
+    } else if (form.state.browserName == 'iOS') {
+      isLogValid = loadEvent.target.result.match(/(\d{2}:\d{2}:\d{2}.*)/ig);
+    } else if (form.state.browserName == 'Android device log') {
+      isLogValid = loadEvent.target.result.match(/(\d{2}:\d{2}:\d{2}.*)/ig);
+    }
     var fieldValidationErrors = form.state.formErrors;
     fieldValidationErrors.textLog = isLogValid ? '' : 'invalid';
     form.setState({formErrors: fieldValidationErrors});
-    // global.isCurrentLogValid = isLogValid ? true : false;
-    console.log(`isValid: ${isLogValid}`);
-    console.log(loadEvent.target.result); // Your text is in loadEvent.target.result
   };
   loader.readAsText(input.files[0]);
 }

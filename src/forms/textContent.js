@@ -109,6 +109,34 @@ export const CRASH_TYPE = "<h4><strong>5. Crash</strong></h4>"
 													+"<li>Computer - application freezes the device, hangs for a long time or closes abruptly</li>"
 													+"<li>Mobile - applications close abruptly with an error</li>"
 													+"</ul>";
+export const SAFARI = "<a class=\"text-success\" href='https://www.utest.com/courses/console-logs/safari-browser'>Safari Browser</a>";
+export const IE = "<a class=\"text-success\" href='https://www.utest.com/courses/console-logs/internet-explorer-browser'>Internet Explorer Browser</a>";
+export const MS_EDGE = "<a class=\"text-success\" href='https://www.utest.com/courses/console-logs/edge-browser'>Edge Browser</a>";
+export const IOS = "<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/iphone-device-logs-with-mac'>iPhone Device Logs with Mac</a><hr/>"
+									+"<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/ios-logs-with-itools'>iOS Logs with iTools</a><hr/>"
+									+"<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/ios-log-files'>iOS Log Files</a>";
+export const ANDROID_DEVICE_LOG = "<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/android-logs-with-adb-shell-commands'>Android Logs with ADB Shell Commands</a><hr/>"
+									+"<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/android-logs-with-adb'>Android Logs with ADB</a><hr/>"
+									+"<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/android-logs-with-windows'>Android Logs with Windows</a><hr/>"
+									+"<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/android-studio-logs'>Android Studio Logs</a>";
+export const ANDROID_CONSOLE_LOG_WITH_CHROME = "<a class=\"text-success\" href='https://www.utest.com/courses/device-logs/android-console-logs-with-chrome'>Android Console Logs with Chrome</a>";
+export var environment = function(type) {
+	switch(type) {
+          case 'Safari':
+            return SAFARI;
+          case 'IE':
+           return IE;
+          case 'MS Edge':
+           return MS_EDGE;
+          case 'iOS':
+            return IOS;
+          case 'Android device log':
+           return ANDROID_DEVICE_LOG;
+         case 'Android Console Logs with Chrome':
+           return ANDROID_CONSOLE_LOG_WITH_CHROME;
+          default: return '';
+	}
+}
 export var issueType = function(type) {
 	switch(type) {
           case 'Content':

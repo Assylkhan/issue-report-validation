@@ -37,6 +37,7 @@ class Form extends Component {
       errorMessage: '',
       additionalInfo: '',
       textLog: '',
+      txtLogInput: '',
       browserName: 'Chrome',
       formErrors: {issueTitle: '', issueType: '', issueFrequency: '',
                   issuePriority: '', actionPerformed: '',
@@ -119,6 +120,7 @@ class Form extends Component {
     let actualResultValid = this.state.actualResultValid;
     let errorMessageValid = this.state.errorMessageValid;
     let additionalInfoValid = this.state.additionalInfoValid;
+    let txtLogInput = this.state.txtLogInput;
     var cycleType = this.state.cycleType;
 
     switch(fieldName) {
@@ -188,6 +190,11 @@ class Form extends Component {
             break;
           default: break;
         }
+      case 'browserName':
+        fieldValidationErrors.textLog = '';
+        var myInput = document.getElementById('txtLogInput');
+        myInput.value = '';
+        break;
       default:
         break;
     }
@@ -202,7 +209,9 @@ class Form extends Component {
                     errorMessageValid: errorMessageValid,
                     additionalInfoValid: additionalInfoValid,
                     formValid: this.state.formValid,
-                    cycleType: cycleType
+                    cycleType: cycleType,
+                    textLog: '',
+                    txtLogInput: txtLogInput
                   }, this.validateForm);
   }
 
@@ -223,7 +232,7 @@ class Form extends Component {
   }
 
   fileUploaded = (e) => {
-    switch (e.target.id) {
+    switch (e.target.name) {
       case 'txtLogInput':
         this.state.textLog = 'someFile';
       break;
@@ -237,11 +246,17 @@ class Form extends Component {
     } 
     else {
       return [
-      <p class="alert alert-danger" style={{display: global.isCurrentLogValid ? 'block' : 'none' }}>Make sure to enable timestamps and preserve log</p>,
+      <p class="alert alert-danger" style={{display: this.state.textLog == '' ? 'none' : 
+      (this.state.formErrors.textLog.length > 0 && (this.state.browserName == 'Chrome' || this.state.browserName == 'Firefox')) ? 
+      'block' : 'none' }}>Make sure to enable timestamps and preserve log, and start capturing a log from refreshing the homepage</p>,
       <p class="alert alert-success" style={{display: this.state.textLog == '' ? 'none' : this.state.formErrors.textLog == '' ? 'block' : 'none' }}>Your log is valid</p>,
       <input class={`form-control ${this.state.textLog == '' ? '' : this.state.formErrors.textLog == '' ? 'is-valid' : 'is-invalid'}`} 
-        onChange={e => this.fileUploaded(e)} type="file" id="txtLogInput" accept="text/plain"/>,<br/>,
-      <input class="btn btn-success" type="button" id="btnLoad" value="Validate the log file" onClick={fileLoader.loadFile.bind(this, "txtLogInput", this)}/>
+        onChange={e => this.fileUploaded(e)} type="file" name="txtLogInput" id="txtLogInput" accept="text/plain"/>,<br/>,
+      <input class="btn btn-success" 
+      style={{display: (this.state.browserName == 'Safari' || 
+                        this.state.browserName == 'IE' ||
+                        this.state.browserName == 'MS Edge')  ? 'none' : 'block' }} 
+      type="button" id="btnLoad" value="Validate the log file" onClick={fileLoader.loadFile.bind(this, "txtLogInput", this)}/>
       ];
     }
   }
@@ -254,8 +269,8 @@ class Form extends Component {
           <ToolTip active={this.state.isTooltipActive[`${fieldName}`]} position={position} arrow="center" parent={`#${fieldName}Tooltip`}>
             <div>
               {text == '' ? <img style={{'width': '750px'}} src={images[imgName]} /> : (imgName != '' && text != '') ? 
-              [<p style={{'width': '700px'}} dangerouslySetInnerHTML={this.createMarkup(text)}></p>,<center><img style={{'width': this.state.issueType == 'Content' ? '500px' : '300px'}} src={images[imgName]} /></center>]
-              : <p style={{'width': '700px'}} dangerouslySetInnerHTML={this.createMarkup(text)}></p>}
+              [<p style={{'width': '700px', 'padding-top': '.8em', 'padding-left': '.8em', 'padding-right': '.8em', 'margin-bottom': '0em'}} dangerouslySetInnerHTML={this.createMarkup(text)}></p>,<center><img style={{'margin-bottom': '.8em', 'width': this.state.issueType == 'Content' ? '500px' : '300px'}} src={images[imgName]} /></center>]
+              : <p style={{'width': '700px', 'padding-top': '.8em', 'padding-left': '.8em', 'padding-right': '.8em'}} dangerouslySetInnerHTML={this.createMarkup(text)}></p>}
             </div>
           </ToolTip>]
   }
@@ -464,7 +479,7 @@ class Form extends Component {
               <label class="control-label required">Log</label>
               {this.renderTooltip('logs', '', 'tooltipNextToLabel', 'top', this.state.cycleType == 'Charles' ? textConstants.CHARLES_LOGS : textConstants.LOGS)}
             </VerticallyCenteringContainer>
-            <label class="control-label">Select your browser</label>
+            <label class="control-label">Select your environment</label>
             <VerticallyCenteringContainer>
               <select class="selectpicker" name="browserName"
                       value={this.state.browserName}
@@ -474,8 +489,13 @@ class Form extends Component {
                 <option>Safari</option>
                 <option>IE</option>
                 <option>MS Edge</option>
+                <option>iOS</option>
+                <option>Android device log</option>
+                <option>Android Console Logs with Chrome</option>
               </select>
-              {this.renderTooltip('browserName', `${this.state.browserName}Log.gif`, '', 'top', '')}
+              {this.renderTooltip('browserName', 
+                (this.state.browserName == 'Chrome' || this.state.browserName == 'Firefox') ? `${this.state.browserName}Log.gif` : '', 
+                '', 'top', textConstants.environment(this.state.browserName))}
             </VerticallyCenteringContainer>
             <br/>
             <label class="alert alert-warning">Log file only in .txt format (guide):
