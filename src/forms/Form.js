@@ -12,7 +12,7 @@ function importAll(r) {
     return images;
 }
 
-const images = importAll(require.context('./images', false, /\.(png|jpeg|svg)$/));
+const images = importAll(require.context('./images', false, /\.(png|jpeg|svg|gif)$/));
 const svgImages = importAll(require.context('./images/svg', false, /\.(png|jpeg|svg)$/));
 
 const VerticallyCenteringContainer = ({children}) => (
@@ -36,10 +36,12 @@ class Form extends Component {
       actualResult: '',
       errorMessage: '',
       additionalInfo: '',
+      textLog: '',
+      browserName: 'Chrome',
       formErrors: {issueTitle: '', issueType: '', issueFrequency: '',
                   issuePriority: '', actionPerformed: '',
                   expectedResult: '', actualResult: '',
-                  errorMessage: '', additionalInfo: ''},
+                  errorMessage: '', additionalInfo: '', textLog: ''},
       issueTitleValid: false,
       issueTypeValid: false,
       issueFrequencyValid: false,
@@ -49,6 +51,7 @@ class Form extends Component {
       actualResultValid: false,
       errorMessageValid: false,
       additionalInfoValid: false,
+      textLogValid: false,
       formValid: false,
       cycleType: 'Intro',
       isTooltipActive: {issueTitle: false,
@@ -123,6 +126,9 @@ class Form extends Component {
         this.state.issueDevice = value;
         break;
       case 'issueTitle':
+        if (this.state.issueTitle == '') {
+          fieldValidationErrors.issueTitle = ''; break;  
+        }
         if (this.state.issueDevice == 'Computer') {
           issueTitleValid = value.match(/^((Windows|Mac|MacOS|Linux|Ubuntu)+(\s{1}((?!-)\S)+){0,2}\s?-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s?)+(-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s{1}){2,}\S+))+$/i);  
         } else {
@@ -143,6 +149,9 @@ class Form extends Component {
         fieldValidationErrors.issuePriority = value;
         break;
       case 'actionPerformed':
+        if (this.state.actionPerformed == '') {
+          fieldValidationErrors.actionPerformed = ''; break;
+        }
         actionPerformedValid = value.match(/^(\d+\s?(\.|\)|-)+\s?[\S\s]*(https:\/\/\S{5,}).*(\n*\d+\s?(\.|\)|-)+\s?((?!observe|https:\/\/|www)\S+)+((?!observe|https:\/\/|www).)+){0,20})+$/g);
         // var containsObserve = value.match(/^.*(\n*.*)*(observe)+(\n*.*)*$/g);
         var containsObserve = value.indexOf('observe') !== -1 ? ' remove observe' : '';
@@ -159,11 +168,11 @@ class Form extends Component {
         fieldValidationErrors.actualResultValid = actualResultValid ? '': ' is too short';
         break;
       case 'errorMessage':
-        errorMessageValid = !value.match(/^(N\/A)+$/gm);
+        errorMessageValid = !value.match(/^(N\/A|n\/a|No error)+$/gm);
         fieldValidationErrors.errorMessage = errorMessageValid ? '': ' unnecessary content';
         break;
       case 'additionalInfo':
-        additionalInfoValid = !value.match(/^(N\/A)+$/gm);
+        additionalInfoValid = !value.match(/^(N\/A|n\/a|No error)+$/gm);
         fieldValidationErrors.additionalInfo = additionalInfoValid ? '': ' unnecessary content';
         break;
       case 'cycleType':
@@ -213,6 +222,15 @@ class Form extends Component {
    return(error.length === 0 ? 'display: none' : 'display: block'); 
   }
 
+  fileUploaded = (e) => {
+    switch (e.target.id) {
+      case 'txtLogInput':
+        this.state.textLog = 'someFile';
+      break;
+      default: break;
+    }
+  }
+
   renderChlsOrTxt(){
     if (this.state.cycleType == 'Charles') { 
       return <input class="form-control" type="file" accept=".chls"/>;
@@ -220,8 +238,10 @@ class Form extends Component {
     else {
       return [
       <p class="alert alert-danger" style={{display: global.isCurrentLogValid ? 'block' : 'none' }}>Make sure to enable timestamps and preserve log</p>,
-      <input class="form-control" type="file" id="txtLogInput" accept="text/plain"/>,
-      <input class="btn btn-success" type="button" id="btnLoad" value="Validate the log file" onClick={fileLoader.loadFile.bind(this, "txtLogInput")}/>
+      <p class="alert alert-success" style={{display: this.state.textLog == '' ? 'none' : this.state.formErrors.textLog == '' ? 'block' : 'none' }}>Your log is valid</p>,
+      <input class={`form-control ${this.state.textLog == '' ? '' : this.state.formErrors.textLog == '' ? 'is-valid' : 'is-invalid'}`} 
+        onChange={e => this.fileUploaded(e)} type="file" id="txtLogInput" accept="text/plain"/>,<br/>,
+      <input class="btn btn-success" type="button" id="btnLoad" value="Validate the log file" onClick={fileLoader.loadFile.bind(this, "txtLogInput", this)}/>
       ];
     }
   }
@@ -268,13 +288,11 @@ class Form extends Component {
             </ul>
           </p>
           <p class="alert alert-danger" style={{display: this.state.formErrors.issueTitle.length > 0 ? 'block' : 'none' }}>{this.state.formErrors.issueTitle}</p>
-          <div style={{'display': 'flex'}}>
-            <input placeholder={this.state.issueDevice == 'Computer' ? 'Windows 10 - Area of the app - Description of the issue' : 'Samsung A7 - Area of the app - Description of the issue' } 
-              type="text" className="form-control is-invalid" name="issueTitle"
-              value={this.state.issueTitle}
-              onChange={this.handleUserInput}
-              style={{'display': 'inline-block'}}/><img src={svgImages[this.state.issueTitleValid ? `thumbsup.svg` : `pencil.svg`]} style={{'margin-left': '8px', 'margin-right': '0px', 'display': 'inline-block'}} />
-          </div>
+          <input placeholder={this.state.issueDevice == 'Computer' ? 'Windows 10 - Area of the app - Description of the issue' : 'Samsung A7 - Area of the app - Description of the issue' } 
+            type="text" className={`form-control ${this.state.issueTitle == '' ? '' : this.state.formErrors.issueTitle.length > 0 ? 'is-invalid' : 'is-valid'} `} name="issueTitle"
+            value={this.state.issueTitle}
+            onChange={this.handleUserInput}
+            style={{'display': 'inline-block'}}/>
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.issueType)}`}>
           <VerticallyCenteringContainer> 
@@ -357,21 +375,23 @@ class Form extends Component {
           </VerticallyCenteringContainer>
           <p class="alert alert-danger" style={{display: this.state.formErrors.actionPerformed.length > 0 ? 'block' : 'none' }}>Make sure it follows the requirements <a class="alert-link" href="https://www.utest.com/courses/bug-reports/information-fields"> here</a></p>
           <textarea placeholder="1. Make sure to include https:// url in the first step                                                             2. etc." 
-            class="form-control rounded-0" id="ActionPerformedId" rows="4" name="actionPerformed"
+            class={`form-control rounded-0 ${this.state.actionPerformed == '' ? '' : this.state.formErrors.actionPerformed == '' ? 'is-valid' : 'is-invalid'}`} id="ActionPerformedId" rows="4" name="actionPerformed"
               value={this.state.actionPerformed}
               onChange={this.handleUserInput}
               onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
 
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.expectedResult)}`}>
+            <label class="control-label required">Expected Result</label>
             <p class="alert alert-warning">Describe exactly <strong><em>what the user would expect to happen when carrying out the steps</em></strong> in the actions performed.</p>
             <p class="alert alert-danger" style={{display: this.state.formErrors.expectedResult.length > 0 ? 'block' : 'none' }}>{this.state.formErrors.expectedResult}</p>
-            <textarea class="form-control rounded-0" id="ExpectedResultId" rows="4" name="expectedResult"
+            <textarea class={`form-control rounded-0 ${this.state.expectedResult == '' ? '' : this.state.formErrors.expectedResult == '' ? 'is-valid' : 'is-invalid'}`} id="ExpectedResultId" rows="4" name="expectedResult"
               value={this.state.expectedResult}
               onChange={this.handleUserInput}
               onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.actualResult)}`}>
+            <label class="control-label required">Actual Result</label>
             <p class="alert alert-warning">Describe exactly <strong><em>what does happen when the user carries out the steps</em></strong> in the actions performed.</p>
             <textarea class="form-control rounded-0" id="ActualResultId" rows="4" name="actualResult"
               value={this.state.actualResult}
@@ -384,8 +404,7 @@ class Form extends Component {
               {this.renderTooltip('errorMessage', '', 'tooltipNextToLabel', 'bottom', textConstants.ERROR_MESSAGE)}
             </VerticallyCenteringContainer>
             <p class="alert alert-warning">Leave it empty if there is nothing to add</p>
-            <p class="alert alert-danger" style={{display: this.state.formErrors.errorMessage.length > 0 ? 'block' : 'none' }}>Leave the field blank if there is noting to add</p>
-            <textarea class="form-control rounded-0" id="ErrorMessageId" rows="4" name="errorMessage"
+            <textarea class={`form-control rounded-0 ${this.state.errorMessage == '' ? '' : this.state.formErrors.errorMessage.length > 0 ? 'is-invalid' : 'is-valid'}`} id="ErrorMessageId" rows="4" name="errorMessage"
               value={this.state.errorMessage}
               onChange={this.handleUserInput}
               onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
@@ -396,8 +415,7 @@ class Form extends Component {
               {this.renderTooltip('additionalInfo', '', 'tooltipNextToLabel', 'bottom', textConstants.ADDITIONAL_INFO)}
             </VerticallyCenteringContainer>
             <p class="alert alert-warning">Leave it empty if there is nothing to add</p>
-            <p class="alert alert-danger" style={{display: this.state.formErrors.additionalInfo.length > 0 ? 'block' : 'none' }}>Leave the field blank if there is noting to add</p>
-            <textarea class="form-control rounded-0" id="AdditionalInfoId" rows="4" name="additionalInfo"
+            <textarea class={`form-control rounded-0 ${this.state.additionalInfo == '' ? '' : this.state.formErrors.additionalInfo.length > 0 ? 'is-invalid' : 'is-valid'}`} id="AdditionalInfoId" rows="4" name="additionalInfo"
               value={this.state.additionalInfo}
               onChange={this.handleUserInput}
               onInput={this.superFNbecauseMSMakesIEsuckIntentionally}></textarea>
@@ -446,7 +464,21 @@ class Form extends Component {
               <label class="control-label required">Log</label>
               {this.renderTooltip('logs', '', 'tooltipNextToLabel', 'top', this.state.cycleType == 'Charles' ? textConstants.CHARLES_LOGS : textConstants.LOGS)}
             </VerticallyCenteringContainer>
-            <label class="alert alert-warning">Log file only in .txt format (guide): 
+            <label class="control-label">Select your browser</label>
+            <VerticallyCenteringContainer>
+              <select class="selectpicker" name="browserName"
+                      value={this.state.browserName}
+                      onChange={this.handleUserInput}>
+                <option>Chrome</option>
+                <option>Firefox</option>
+                <option>Safari</option>
+                <option>IE</option>
+                <option>MS Edge</option>
+              </select>
+              {this.renderTooltip('browserName', `${this.state.browserName}Log.gif`, '', 'top', '')}
+            </VerticallyCenteringContainer>
+            <br/>
+            <label class="alert alert-warning">Log file only in .txt format (guide):
               <ul>
                 <li style={{display: this.state.cycleType == 'Charles' ? 'none' : 'list-item' }}><a class="alert-link" href="https://www.utest.com/courses/console-logs">capturing browser console logs</a></li>
                 <li style={{display: this.state.cycleType == 'Charles' ? 'none' : 'list-item' }}><a class="alert-link" href="https://www.utest.com/courses/device-logs">capturing device logs</a></li>

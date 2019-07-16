@@ -1,7 +1,6 @@
-export function loadFile(inputId) {
+export function loadFile(inputId, form) {
   var input = document.getElementById(inputId);
   var loader = new FileReader();
-  // console.log(input.files[0]);
   loader.onload = function (loadEvent) {
     if (loadEvent.target.readyState != 2)
       return;
@@ -10,7 +9,10 @@ export function loadFile(inputId) {
       return;
     }
     var isLogValid = loadEvent.target.result.match(/(\d{2}:\d{2}:\d{2}\.\d{3}\s{1}Navigated to )/ig);
-    global.isCurrentLogValid = isLogValid ? true : false;
+    var fieldValidationErrors = form.state.formErrors;
+    fieldValidationErrors.textLog = isLogValid ? '' : 'invalid';
+    form.setState({formErrors: fieldValidationErrors});
+    // global.isCurrentLogValid = isLogValid ? true : false;
     console.log(`isValid: ${isLogValid}`);
     console.log(loadEvent.target.result); // Your text is in loadEvent.target.result
   };
