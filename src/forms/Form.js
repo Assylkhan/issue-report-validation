@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormErrors } from './FormErrors';
 import * as fileLoader from '../utils/fileReader.js';
 import * as textConstants from './textContent.js';
-import ToolTip from 'react-portal-tooltip'
+import ToolTip from '../customizedLibs/react-portal-tooltip/src/index.js';
 import './Form.css';
 // import { loadFile } from '../utils/fileReader.js';
 

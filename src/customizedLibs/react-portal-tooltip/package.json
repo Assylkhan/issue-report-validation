@@ -1,0 +1,76 @@
+{
+  "_from": "git+https://github.com/Assylkhan/react-portal-tooltip.git",
+  "_id": "react-portal-tooltip@2.4.7",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/react-portal-tooltip",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "react-portal-tooltip@git+https://github.com/Assylkhan/react-portal-tooltip.git",
+    "name": "react-portal-tooltip",
+    "escapedName": "react-portal-tooltip",
+    "rawSpec": "git+https://github.com/Assylkhan/react-portal-tooltip.git",
+    "saveSpec": "git+https://github.com/Assylkhan/react-portal-tooltip.git",
+    "fetchSpec": "https://github.com/Assylkhan/react-portal-tooltip.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/Assylkhan/react-portal-tooltip.git#b5393d3fc6fe336a272d44868610e65b193c8182",
+  "_spec": "react-portal-tooltip@git+https://github.com/Assylkhan/react-portal-tooltip.git",
+  "_where": "C:\\Users\\Assylkhan\\Desktop\\coding\\issue-report-validation",
+  "author": {
+    "name": "Romain Berger",
+    "email": "romain@romainberger.com"
+  },
+  "bugs": {
+    "url": "https://github.com/romainberger/react-portal-tooltip"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Awesome React tooltips",
+  "devDependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.4.0",
+    "@babel/plugin-proposal-class-properties": "7.4.0",
+    "@babel/plugin-proposal-export-default-from": "7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.4.0",
+    "@babel/preset-env": "7.4.2",
+    "@babel/preset-react": "7.0.0",
+    "@babel/register": "7.4.0",
+    "mocha": "^6.1.4",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-test-renderer": "^16.0.0"
+  },
+  "homepage": "https://github.com/romainberger/react-portal-tooltip",
+  "keywords": [
+    "react",
+    "reactjs",
+    "component",
+    "tooltip",
+    "portal"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "react-portal-tooltip",
+  "peerDependencies": {
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romainberger/react-portal-tooltip.git"
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "prepublish": "del -rf lib && npm run build",
+    "start": "babel src --watch --out-dir lib",
+    "test": "mocha --require @babel/register"
+  },
+  "version": "2.4.7"
+}
