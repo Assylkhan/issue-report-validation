@@ -122,7 +122,7 @@ class Form extends Component {
     let additionalInfoValid = this.state.additionalInfoValid;
     let txtLogInput = this.state.txtLogInput;
     var cycleType = this.state.cycleType;
-
+    
     switch(fieldName) {
       case 'issueDevice':
         this.state.issueDevice = value;
@@ -182,14 +182,15 @@ class Form extends Component {
           case 'Introduction to Testing':
             cycleType = 'Intro';
             break;
-          case 'Computers & Mobile & Challeng':
+          case 'Computers & Mobile & Challenge':
             cycleType = 'Comp';
             break;
           case 'Charles':
-            cycleType = "Charles";
+            cycleType = 'Charles';
             break;
           default: break;
-        }
+        }; 
+        break;
       case 'browserName':
         fieldValidationErrors.textLog = '';
         var myInput = document.getElementById('txtLogInput');

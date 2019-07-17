@@ -11,7 +11,7 @@ export default class Create extends Component {
 		// this.handleLoad = this.handleLoad.bind(this);
 		let url = this.props.location.search;
     let params = queryString.parse(url);
-    this.getVisitsAmount(params["role"]);
+    // this.getVisitsAmount(params["role"]);
 	}
 
 	getVisitsAmount(role){
