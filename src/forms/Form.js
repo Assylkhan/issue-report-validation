@@ -182,7 +182,7 @@ class Form extends Component {
           case 'Introduction to Testing':
             cycleType = 'Intro';
             break;
-          case 'Computers & Mobile & Challenge':
+          case 'Computers & Mobile & Challeng':
             cycleType = 'Comp';
             break;
           case 'Charles':
