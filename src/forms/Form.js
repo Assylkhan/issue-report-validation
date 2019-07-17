@@ -479,25 +479,26 @@ class Form extends Component {
               <label class="control-label required">Log</label>
               {this.renderTooltip('logs', '', 'tooltipNextToLabel', 'top', this.state.cycleType == 'Charles' ? textConstants.CHARLES_LOGS : textConstants.LOGS)}
             </VerticallyCenteringContainer>
-            <label class="control-label">Select your environment</label>
-            <VerticallyCenteringContainer>
-              <select class="selectpicker" name="browserName"
-                      value={this.state.browserName}
-                      onChange={this.handleUserInput}>
-                <option>Chrome</option>
-                <option>Firefox</option>
-                <option>Safari</option>
-                <option>IE</option>
-                <option>MS Edge</option>
-                <option>iOS</option>
-                <option>Android device log</option>
-                <option>Android Console Logs with Chrome</option>
-              </select>
-              {this.renderTooltip('browserName', 
-                (this.state.browserName == 'Chrome' || this.state.browserName == 'Firefox') ? `${this.state.browserName}Log.gif` : '', 
-                '', 'top', textConstants.environment(this.state.browserName))}
-            </VerticallyCenteringContainer>
-            <br/>
+            { this.state.cycleType == 'Charles' ? '' : 
+            [ <label class="control-label">Select your environment</label>,
+              <VerticallyCenteringContainer>
+                <select class="selectpicker" name="browserName"
+                        value={this.state.browserName}
+                        onChange={this.handleUserInput}>
+                  <option>Chrome</option>
+                  <option>Firefox</option>
+                  <option>Safari</option>
+                  <option>IE</option>
+                  <option>MS Edge</option>
+                  <option>iOS</option>
+                  <option>Android device log</option>
+                  <option>Android Console Logs with Chrome</option>
+                </select>
+                {this.renderTooltip('browserName', 
+                  (this.state.browserName == 'Chrome' || this.state.browserName == 'Firefox') ? `${this.state.browserName}Log.gif` : '', 
+                  '', 'top', textConstants.environment(this.state.browserName))}
+              </VerticallyCenteringContainer>, <br/>]
+            }
             <label class="alert alert-warning">Log file only in .txt format (guide):
               <ul>
                 <li style={{display: this.state.cycleType == 'Charles' ? 'none' : 'list-item' }}><a class="alert-link" href="https://www.utest.com/courses/console-logs">capturing browser console logs</a></li>
