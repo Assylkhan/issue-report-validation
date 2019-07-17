@@ -134,7 +134,7 @@ class Form extends Component {
         if (this.state.issueDevice == 'Computer') {
           issueTitleValid = value.match(/^((Windows|Mac|MacOS|Linux|Ubuntu)+(\s{1}((?!-)\S)+){0,2}\s?-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s?)+(-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s{1}){2,}\S+))+$/i);  
         } else {
-          issueTitleValid = value.match(/^(((?!(Windows|Mac|MacOS|Linux|Ubuntu))\S)+(\s{1}((?!-)\S)+){0,2}\s?-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s?)+(-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s{1}){2,}\S+))+$/i);
+          issueTitleValid = value.match(/^(((?!(Windows|Mac|MacOS|Linux|Ubuntu|Android|iOS))\S)+(\s{1}((?!-)\S)+){0,2}\s?-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s?)+(-{1}\s?((?!\-)\S)+(((?!\-)\S)+\s{1}){2,}\S+))+$/i);
         }
         fieldValidationErrors.issueTitle = issueTitleValid ? '' : ' Title has to follow the required format';
         break;
@@ -170,11 +170,11 @@ class Form extends Component {
         fieldValidationErrors.actualResultValid = actualResultValid ? '': ' is too short';
         break;
       case 'errorMessage':
-        errorMessageValid = !value.match(/^(N\/A|n\/a|No error)+$/gm);
+        errorMessageValid = !value.match(/^(N\/A|n\/a|No error)+.*$/gm);
         fieldValidationErrors.errorMessage = errorMessageValid ? '': ' unnecessary content';
         break;
       case 'additionalInfo':
-        additionalInfoValid = !value.match(/^(N\/A|n\/a|No error)+$/gm);
+        additionalInfoValid = !value.match(/^(N\/A|n\/a|No error)+.*$/gm);
         fieldValidationErrors.additionalInfo = additionalInfoValid ? '': ' unnecessary content';
         break;
       case 'cycleType':

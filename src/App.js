@@ -1,5 +1,6 @@
 // import React from 'react';
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +9,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Create from './components/create.component';
 import Edit from './components/edit.component';
 import Index from './components/index.component';
+
+function initializeReactGA() {
+    ReactGA.initialize('UA-144010788-1');
+    ReactGA.pageview('/');
+}
 
 class App extends Component {
 
@@ -26,6 +32,7 @@ class App extends Component {
   //           </div>
             // <Link to={'/'} className="alert-link" align="center">Issue Validation</Link>
   render() {
+    initializeReactGA();
     return (
       <Router>
         <div className="container">
